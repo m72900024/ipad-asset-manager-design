@@ -45,26 +45,15 @@
 
     .board {
       min-height: 100vh;
-      display: grid;
-      grid-template-columns: 296px minmax(0, 1fr);
-    }
-
-    .rail {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      padding: 24px 18px;
-      border-right: 1px solid var(--line);
-      background: rgba(255,255,255,0.82);
-      backdrop-filter: blur(20px);
-      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
     }
 
     .brand {
       display: flex;
       gap: 12px;
       align-items: center;
-      margin-bottom: 22px;
+      min-width: 260px;
     }
 
     .brand-mark {
@@ -101,18 +90,17 @@
     }
 
     .nav-list {
-      display: grid;
+      display: flex;
+      flex-wrap: wrap;
       gap: 7px;
     }
 
     .nav-btn {
-      width: 100%;
-      min-height: 42px;
-      display: grid;
-      grid-template-columns: 24px 1fr;
-      gap: 10px;
+      min-height: 38px;
+      display: inline-flex;
+      gap: 8px;
       align-items: center;
-      padding: 10px 12px;
+      padding: 0 12px;
       border: 1px solid transparent;
       border-radius: var(--radius);
       color: var(--muted);
@@ -120,6 +108,7 @@
       text-align: left;
       font-size: 14px;
       font-weight: 800;
+      white-space: nowrap;
     }
 
     .nav-btn:hover, .nav-btn.active {
@@ -132,18 +121,18 @@
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 6px;
-      margin-top: 10px;
+      width: 164px;
     }
 
     .swatch {
-      height: 28px;
+      height: 22px;
       border-radius: 7px;
       border: 1px solid rgba(23,32,51,0.1);
     }
 
     .content {
       min-width: 0;
-      padding: 24px;
+      padding: 18px 24px 24px;
     }
 
     .topbar {
@@ -152,6 +141,46 @@
       gap: 16px;
       align-items: center;
       margin-bottom: 18px;
+    }
+
+    .presentation-head {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.86);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 10px 28px rgba(31, 94, 255, 0.08);
+    }
+
+    .frame-nav {
+      display: grid;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .frame-nav-row {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      padding-bottom: 1px;
+    }
+
+    .frame-nav-row::-webkit-scrollbar { height: 0; }
+
+    .token-strip {
+      display: grid;
+      justify-items: end;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
     }
 
     .topbar h2 {
@@ -866,8 +895,12 @@
     .ipad-frame .modal { width: 460px; }
 
     @media (max-width: 980px) {
-      .board { grid-template-columns: 1fr; }
-      .rail { position: static; height: auto; }
+      .presentation-head {
+        position: static;
+        grid-template-columns: 1fr;
+      }
+      .brand { min-width: 0; }
+      .token-strip { justify-items: start; }
       .topbar { align-items: flex-start; flex-direction: column; }
       .frame-shell { padding: 10px; }
     }
@@ -875,42 +908,43 @@
 </head>
 <body>
   <main class="board">
-    <aside class="rail">
+    <header class="presentation-head">
       <div class="brand">
         <div class="brand-mark"><i data-lucide="tablet"></i></div>
         <div>
           <h1>iPad 資產管理</h1>
-          <p>Figma-ready redesign board</p>
+          <p>設計稿展示頁</p>
         </div>
       </div>
 
-      <div class="section-label">Desktop frames</div>
-      <div class="nav-list">
-        <button class="nav-btn active" data-target="desktop-dashboard"><i data-lucide="layout-dashboard"></i><span>分佈概覽</span></button>
-        <button class="nav-btn" data-target="desktop-carts"><i data-lucide="boxes"></i><span>充電車管理</span></button>
-        <button class="nav-btn" data-target="desktop-edit"><i data-lucide="table-2"></i><span>數據編輯</span></button>
-        <button class="nav-btn" data-target="desktop-mdm"><i data-lucide="search-check"></i><span>MDM 查詢</span></button>
-        <button class="nav-btn" data-target="desktop-logs"><i data-lucide="history"></i><span>操作紀錄</span></button>
-        <button class="nav-btn" data-target="desktop-home"><i data-lucide="home"></i><span>首頁入口</span></button>
-        <button class="nav-btn" data-target="desktop-checklist"><i data-lucide="printer"></i><span>期末檢查單</span></button>
+      <div class="frame-nav">
+        <div class="frame-nav-row" aria-label="桌機版畫面">
+          <button class="nav-btn active" data-target="desktop-dashboard"><i data-lucide="layout-dashboard"></i><span>分佈概覽</span></button>
+          <button class="nav-btn" data-target="desktop-carts"><i data-lucide="boxes"></i><span>充電車管理</span></button>
+          <button class="nav-btn" data-target="desktop-edit"><i data-lucide="table-2"></i><span>數據編輯</span></button>
+          <button class="nav-btn" data-target="desktop-mdm"><i data-lucide="search-check"></i><span>MDM 查詢</span></button>
+          <button class="nav-btn" data-target="desktop-logs"><i data-lucide="history"></i><span>操作紀錄</span></button>
+          <button class="nav-btn" data-target="desktop-home"><i data-lucide="home"></i><span>首頁入口</span></button>
+          <button class="nav-btn" data-target="desktop-checklist"><i data-lucide="printer"></i><span>期末檢查單</span></button>
+        </div>
+        <div class="frame-nav-row" aria-label="iPad 版畫面">
+          <button class="nav-btn" data-target="ipad-cart"><i data-lucide="hand-pointer"></i><span>iPad 現場盤點</span></button>
+          <button class="nav-btn" data-target="ipad-mdm"><i data-lucide="clipboard-search"></i><span>iPad MDM 結果</span></button>
+          <button class="nav-btn" data-target="ipad-modal"><i data-lucide="panel-top"></i><span>iPad 搬移操作</span></button>
+        </div>
       </div>
 
-      <div class="section-label">iPad frames</div>
-      <div class="nav-list">
-        <button class="nav-btn" data-target="ipad-cart"><i data-lucide="hand-pointer"></i><span>現場盤點</span></button>
-        <button class="nav-btn" data-target="ipad-mdm"><i data-lucide="clipboard-search"></i><span>MDM 結果</span></button>
-        <button class="nav-btn" data-target="ipad-modal"><i data-lucide="panel-top"></i><span>搬移操作</span></button>
+      <div class="token-strip">
+        <span>Tokens</span>
+        <div class="token-grid" aria-label="Color tokens">
+          <span class="swatch" style="background:#1f5eff"></span>
+          <span class="swatch" style="background:#00a7c8"></span>
+          <span class="swatch" style="background:#19a974"></span>
+          <span class="swatch" style="background:#e59b17"></span>
+          <span class="swatch" style="background:#df4d5f"></span>
+        </div>
       </div>
-
-      <div class="section-label">Tokens</div>
-      <div class="token-grid" aria-label="Color tokens">
-        <span class="swatch" style="background:#1f5eff"></span>
-        <span class="swatch" style="background:#00a7c8"></span>
-        <span class="swatch" style="background:#19a974"></span>
-        <span class="swatch" style="background:#e59b17"></span>
-        <span class="swatch" style="background:#df4d5f"></span>
-      </div>
-    </aside>
+    </header>
 
     <section class="content">
       <div class="topbar">
